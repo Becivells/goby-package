@@ -1,0 +1,11 @@
+/var/log/goby/*.log {
+    rotate 5
+    size 10M
+    missingok
+    notifempty
+    compress
+    create 600 root root
+    postrotate
+        /usr/bin/killall -HUP rsyslogd
+    endscript
+}

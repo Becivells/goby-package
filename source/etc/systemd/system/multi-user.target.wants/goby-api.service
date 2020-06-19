@@ -1,0 +1,18 @@
+[Unit]
+Description=goby cmd api
+After=network-online.target
+[Service]
+Type=simple
+WorkingDirectory=/opt/goby-api/
+ExecStartPre=/usr/bin/mkdir -p /var/log/goby/
+ExecStart=/opt/goby-api/goby-cmd-linux       \
+                     -apiauth GOBY_USER:GOBY_PASSWD   \
+                     -mode api            \
+                     -bind 0.0.0.0:8361
+LimitNOFILE=102400
+LimitNPROC=10000
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+[Install]
+WantedBy=multi-user.target
