@@ -36,3 +36,20 @@ services:
       - SUMMARY
     command:
       - /opt/entrypoint/entrypoint.bash
+  kali2_build:
+    build: ./docker/package/images/deb-compliant/kali2/dockerfile/
+    volumes:
+      - ./docker/package/images/deb-compliant/kali2/DEBIAN/:/opt/DEBIAN/:ro # 无需改变
+      - ./docker/package/images/deb-compliant/kali2/entrypoint/:/opt/entrypoint/:ro # 无需改变
+      - ./packages:/packages/ # 无需改变
+      - ./:/opt/package/:ro  # 无需改变
+    environment:
+      - BINARY
+      - GITREPO
+      - CURVER
+      - RELEASE
+      - ARCH=amd64
+      - OS=kali2
+      - SUMMARY
+    command:
+      - /opt/entrypoint/entrypoint.bash

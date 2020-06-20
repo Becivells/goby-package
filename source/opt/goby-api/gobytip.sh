@@ -1,5 +1,5 @@
-#!/bin/sh
-# mysql数据库备???可以指定备份保留次数，指定不备份数据???
+#!/bin/bash
+
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 

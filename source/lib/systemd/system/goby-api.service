@@ -13,7 +13,6 @@ ExecStart=/opt/goby-api/golib/goby-cmd-linux          \
 LimitNOFILE=102400
 LimitNPROC=10000
 User=nobody
-Group=nobody
 Restart=on-failure
 StandardOutput=syslog
 StandardError=syslog

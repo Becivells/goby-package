@@ -26,8 +26,8 @@ PASSFILE="/opt/goby-api/.gobypasswd"
       GUSER=`cut -d : -f 1 ${PASSFILE}`
       GPASSWD=`cut -d : -f 2 ${PASSFILE}`
  fi
- sed -i "s/GOBY_USER/${GUSER}/g" /etc/systemd/system/multi-user.target.wants/goby-api.service
- sed -i "s/GOBY_PASSWD/${GPASSWD}/g" /etc/systemd/system/multi-user.target.wants/goby-api.service
+ sed -i "s/GOBY_USER/${GUSER}/g" /lib/systemd/system/goby-api.service
+ sed -i "s/GOBY_PASSWD/${GPASSWD}/g" /lib/systemd/system/goby-api.service
 setcap cap_net_raw,cap_net_admin=eip /opt/goby-api/golib/goby-cmd-linux
 touch /opt/goby-api/.dingtoken
 systemctl restart rsyslog
@@ -46,7 +46,7 @@ systemctl stop goby-api
 %defattr(-,root,root,-)
 /etc/rsyslog.d/goby-api.conf
 /etc/logrotate.d/goby-api
-/etc/systemd/system/multi-user.target.wants/goby-api.service
+/lib/systemd/system/goby-api.service
 %defattr(-,nobody,nobody,-)
 %attr(-,nobody,nobody) /opt/goby-api/golib/
 %attr(0755,root,root) /opt/goby-api/golib/goby-cmd-linux
