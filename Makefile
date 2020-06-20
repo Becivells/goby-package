@@ -1,7 +1,7 @@
 # auto rpm
 
 export BINARY=goby-api
-export CURVER?=1.6.154
+export CURVER?=1.17.160
 export RELEASE=1
 export GITREPO=https://github.com/gobysec/Goby/
 export SUMMARY="a sec tools"

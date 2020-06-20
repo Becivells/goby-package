@@ -28,6 +28,8 @@ PASSFILE="/opt/goby-api/.gobypasswd"
  fi
  sed -i "s/GOBY_USER/${GUSER}/g" /etc/systemd/system/multi-user.target.wants/goby-api.service
  sed -i "s/GOBY_PASSWD/${GPASSWD}/g" /etc/systemd/system/multi-user.target.wants/goby-api.service
+setcap cap_net_raw,cap_net_admin=eip /opt/goby-api/golib/goby-cmd-linux
+touch /opt/goby-api/.dingtoken
 systemctl restart rsyslog
 systemctl daemon-reload
 
@@ -42,20 +44,22 @@ systemctl stop goby-api
 
 %files
 %defattr(-,root,root,-)
-
-%attr(0755,root,root) /opt/goby-api/goby-cmd-linux
-/opt/goby-api/exploits/system/
-/opt/goby-api/exploits/user/
 /etc/rsyslog.d/goby-api.conf
 /etc/logrotate.d/goby-api
 /etc/systemd/system/multi-user.target.wants/goby-api.service
-%config(noreplace) /opt/goby-api/postgres_user_pass.dict
-%config(noreplace) /opt/goby-api/smb_user_pass.dict
-%config(noreplace) /opt/goby-api/tomcat_user_pass.dict
-%config(noreplace) /opt/goby-api/ftp_user_pass.dict
-%config(noreplace) /opt/goby-api/mysql_user_pass.dict
-%config(noreplace) /opt/goby-api/rdp_user_pass.dict
-%config(noreplace) /opt/goby-api/ssh_user_pass.dict
-%config(noreplace) /opt/goby-api/user_pass.dict
+%defattr(-,nobody,nobody,-)
+%attr(-,nobody,nobody) /opt/goby-api/golib/
+%attr(0755,root,root) /opt/goby-api/golib/goby-cmd-linux
+%attr(0755,root,root) /opt/goby-api/gobytip.sh
+%config(noreplace) /opt/goby-api/golib/postgres_user_pass.dict
+%config(noreplace) /opt/goby-api/golib/smb_user_pass.dict
+%config(noreplace) /opt/goby-api/golib/tomcat_user_pass.dict
+%config(noreplace) /opt/goby-api/golib/ftp_user_pass.dict
+%config(noreplace) /opt/goby-api/golib/mysql_user_pass.dict
+%config(noreplace) /opt/goby-api/golib/rdp_user_pass.dict
+%config(noreplace) /opt/goby-api/golib/ssh_user_pass.dict
+%config(noreplace) /opt/goby-api/golib/user_pass.dict
+/opt/goby-api/golib/exploits/system/
+/opt/goby-api/golib/exploits/user/
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
