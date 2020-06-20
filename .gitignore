@@ -155,7 +155,7 @@ $RECYCLE.BIN/
 *.msix
 *.msm
 *.msp
-source/opt/
+source/opt/goby-api/golib
 # Windows shortcuts
 *.lnk
 .idea
