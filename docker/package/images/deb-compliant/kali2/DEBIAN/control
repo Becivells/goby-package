@@ -1,0 +1,7 @@
+Package: Package_VAR
+Version: Version_VAR
+Architecture: Architecture_VAR
+Maintainer: goby
+Section: net
+Priority: optional
+Description: Description_VAR

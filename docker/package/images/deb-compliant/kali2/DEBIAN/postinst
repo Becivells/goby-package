@@ -1,0 +1,23 @@
+#!/bin/bash
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
+PASSFILE="/opt/goby-api/.gobypasswd"
+ if [ ! -f "${PASSFILE}" ]; then
+       GUSER=`cat /dev/urandom | head -1 | md5sum | head -c 6`
+       GPASSWD=`cat /dev/urandom | head -1 | md5sum | head -c 16`
+       echo "${GUSER}:${GPASSWD}">${PASSFILE}
+       echo "create passwd file ${PASSFILE}"
+ else
+      GUSER=`cut -d : -f 1 ${PASSFILE}`
+      GPASSWD=`cut -d : -f 2 ${PASSFILE}`
+ fi
+sed -i "s/GOBY_USER/${GUSER}/g" /lib/systemd/system/goby-api.service
+sed -i "s/GOBY_PASSWD/${GPASSWD}/g" /lib/systemd/system/goby-api.service
+sed -i "s/User=nobody/User=root/g" /lib/systemd/system/goby-api.service
+touch /opt/goby-api/.dingtoken
+chmod 755 /opt/goby-api/golib/goby-cmd-linux
+mkdir -p /var/log/goby/
+systemctl restart rsyslog
+systemctl daemon-reload
